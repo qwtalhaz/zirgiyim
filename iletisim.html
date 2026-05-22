@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - ZırGiyim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo"><a href="index.html"><svg class="logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1a1a1a"/><path d="M8 12h10l-4 6h4l-6 10h14" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="30" cy="14" r="4" fill="#d4af37"/><path d="M28 20c0 0 2 2 2 4" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span class="logo-text">Zır<span>Giyim</span></span></a></div>
+                <ul class="nav-menu" id="main-nav"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="contact-page">
+        <div class="container">
+            <h2 class="page-title">İletişim</h2>
+            <p class="page-subtitle">Sorularınız için bize ulaşın, en kısa sürede yanıt verelim.</p>
+
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <span class="contact-icon">📍</span>
+                        <div>
+                            <h4>Adres</h4>
+                            <p>Bağcılar Mah. Moda Cad. No:12<br>İstanbul, Türkiye</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <span class="contact-icon">📞</span>
+                        <div>
+                            <h4>Telefon</h4>
+                            <p>+90 (212) 555 00 00</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <span class="contact-icon">✉️</span>
+                        <div>
+                            <h4>E-posta</h4>
+                            <p>info@zirgiyim.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-info-item">
+                        <span class="contact-icon">🕐</span>
+                        <div>
+                            <h4>Çalışma Saatleri</h4>
+                            <p>Hft içi 09:00 – 18:00<br>Cumartesi 10:00 – 16:00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-box">
+                    <div id="contact-success-msg" class="contact-success" style="display:none">
+                        ✅ Mesajınız başarıyla iletildi! En kısa sürede dönüş yapacağız.
+                    </div>
+                    <form id="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Adınız Soyadınız</label>
+                                <input type="text" id="c-name" placeholder="Ad Soyad" required>
+                            </div>
+                            <div class="form-group">
+                                <label>E-posta</label>
+                                <input type="email" id="c-email" placeholder="ornek@mail.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Konu</label>
+                            <select id="c-subject">
+                                <option value="Sipariş Hakkında">Sipariş Hakkında</option>
+                                <option value="Ürün Bilgisi">Ürün Bilgisi</option>
+                                <option value="İade / Değişim">İade / Değişim</option>
+                                <option value="Şikayet">Şikayet</option>
+                                <option value="Diğer">Diğer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mesajınız</label>
+                            <textarea id="c-message" rows="5" placeholder="Mesajınızı buraya yazın..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Mesaj Gönder ✉️</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ZırGiyim. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const msg = {
+                id: Date.now(),
+                name: document.getElementById('c-name').value.trim(),
+                email: document.getElementById('c-email').value.trim(),
+                subject: document.getElementById('c-subject').value,
+                message: document.getElementById('c-message').value.trim(),
+                date: new Date().toLocaleDateString('tr-TR'),
+                time: new Date().toLocaleTimeString('tr-TR'),
+                read: false
+            };
+            const msgs = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            msgs.unshift(msg);
+            localStorage.setItem('contactMessages', JSON.stringify(msgs));
+            document.getElementById('contact-success-msg').style.display = 'block';
+            this.reset();
+            setTimeout(() => document.getElementById('contact-success-msg').style.display = 'none', 4000);
+        });
+    </script>
+</body>
+</html>

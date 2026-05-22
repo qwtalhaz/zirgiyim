@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZırGiyim - Modern Moda</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/admin-enhanced.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo"><a href="index.html"><svg class="logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1a1a1a"/><path d="M8 12h10l-4 6h4l-6 10h14" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="30" cy="14" r="4" fill="#d4af37"/><path d="M28 20c0 0 2 2 2 4" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span class="logo-text">Zır<span>Giyim</span></span></a></div>
+                <ul class="nav-menu" id="main-nav">
+                    <li><a href="index.html" class="active">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="cart.html">Sepet <span id="cart-count" class="cart-badge">0</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Yeni Sezon Koleksiyonu</h2>
+            <p>Modern ve şık tasarımlarla tarzınızı yansıtın</p>
+            <a href="products.html" class="btn btn-primary">Ürünleri İncele</a>
+        </div>
+    </section>
+
+    <section class="featured-categories">
+        <div class="container">
+            <h2 class="section-title">Kategoriler</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="erkek">
+                    <div class="category-image">
+                        <div class="placeholder-image">👔</div>
+                    </div>
+                    <h3>Erkek Giyim</h3>
+                    <a href="products.html?category=erkek" class="btn btn-secondary">İncele</a>
+                </div>
+                <div class="category-card" data-category="kadin">
+                    <div class="category-image">
+                        <div class="placeholder-image">👗</div>
+                    </div>
+                    <h3>Kadın Giyim</h3>
+                    <a href="products.html?category=kadin" class="btn btn-secondary">İncele</a>
+                </div>
+                <div class="category-card" data-category="aksesuar">
+                    <div class="category-image">
+                        <div class="placeholder-image">👜</div>
+                    </div>
+                    <h3>Aksesuar</h3>
+                    <a href="products.html?category=aksesuar" class="btn btn-secondary">İncele</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Öne Çıkan Ürünler</h2>
+            <div id="featured-products-grid" class="products-grid">
+            </div>
+        </div>
+    </section>    <!-- İLETİŞİM CTA -->
+    <section class="contact-cta-section" style="padding:3rem 0;background:#1a1a1a;text-align:center;color:#fff">
+        <div class="container">
+            <h2 style="font-size:1.6rem;margin-bottom:0.5rem">Sorularınız mı var?</h2>
+            <p style="color:#ccc;margin-bottom:1.5rem">Bizimle iletişime geçin, en kısa sürede yanıt verelim.</p>
+            <a href="iletisim.html" class="btn btn-primary">İletişime Geç ✉️</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ZırGiyim. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepet - ZırGiyim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo"><a href="index.html"><svg class="logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1a1a1a"/><path d="M8 12h10l-4 6h4l-6 10h14" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="30" cy="14" r="4" fill="#d4af37"/><path d="M28 20c0 0 2 2 2 4" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span class="logo-text">Zır<span>Giyim</span></span></a></div>
+                <ul class="nav-menu" id="main-nav">
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="cart.html" class="active">Sepet <span id="cart-count" class="cart-badge">0</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="cart-page">
+        <div class="container">
+            <h2 class="page-title">Alışveriş Sepetim</h2>
+            
+            <div id="cart-content" class="cart-content">
+                <div class="empty-cart">
+                    <p>Sepetiniz boş</p>
+                    <a href="products.html" class="btn btn-primary">Alışverişe Başla</a>
+                </div>
+            </div>
+
+            <div id="cart-summary" class="cart-summary" style="display: none;">
+                <h3>Sipariş Özeti</h3>
+                <div class="summary-row">
+                    <span>Ara Toplam:</span>
+                    <span id="subtotal">₺0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Kargo:</span>
+                    <span id="shipping">₺0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Toplam:</span>
+                    <span id="total">₺0</span>
+                </div>
+                <button id="checkout-btn" class="btn btn-primary btn-block">Ödemeye Geç</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ödeme Bilgileri</h2>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>Ad Soyad *</label>
+                    <input type="text" id="customer-name" name="customerName" required minlength="3">
+                </div>
+                <div class="form-group">
+                    <label>E-posta *</label>
+                    <input type="email" id="customer-email" name="customerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefon * (05XX XXX XX XX)</label>
+                    <input type="tel" id="customer-phone" name="customerPhone" required pattern="05[0-9]{9}" placeholder="05XX XXX XX XX">
+                </div>
+                <div id="autofill-notice" style="display:none;" class="autofilled-notice">
+                    ✅ Profil bilgileriniz otomatik dolduruldu. İsterseniz düzenleyebilirsiniz.
+                </div>
+                <div class="form-group">
+                    <label>Açık Adres *</label>
+                    <textarea id="customer-address" name="customerAddress" required rows="2" minlength="10" placeholder="Mahalle, cadde, sokak, bina no, daire no"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>İl *</label>
+                        <div id="checkout-il-container"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>İlçe *</label>
+                        <div id="checkout-ilce-container"></div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Posta Kodu</label>
+                        <input type="text" id="customer-zip" name="customerZip" placeholder="34XXX" maxlength="5">
+                    </div>
+                </div>
+                
+                <hr style="margin: 30px 0; border: 1px solid #e0e0e0;">
+                <h3 style="margin-bottom: 20px; color: var(--primary-color);">Kart Bilgileri</h3>
+                
+                <div class="form-group">
+                    <label>Kart Üzerindeki İsim *</label>
+                    <input type="text" id="card-holder-name" name="cardHolderName" required minlength="3" placeholder="Ad Soyad">
+                </div>
+                <div class="form-group">
+                    <label>Kart Numarası *</label>
+                    <input type="text" id="card-number" name="cardNumber" placeholder="**** **** **** ****" required maxlength="19" oninput="formatCardNumber(this)">
+                    <small class="form-help">16 haneli kart numaranızı giriniz</small>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Son Kullanma Tarihi *</label>
+                        <input type="text" id="card-expiry" name="cardExpiry" placeholder="AA/YY" required maxlength="5" oninput="formatExpiryDate(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>CVC/CVV *</label>
+                        <input type="text" id="card-cvc" name="cardCVC" placeholder="***" required maxlength="4" pattern="[0-9]{3,4}">
+                    </div>
+                </div>
+                
+                <div class="payment-info">
+                    <p><strong>🔒 Güvenli Ödeme</strong></p>
+                    <small>Ödemeniz İyzico güvencesiyle gerçekleştirilmektedir. Kart bilgileriniz güvenli bir şekilde şifrelenmektedir.</small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block" id="submit-payment-btn">
+                    <span>Ödemeyi Tamamla</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ZırGiyim. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/turkiye-sehirler.js"></script>
+    <script src="js/cart-page.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

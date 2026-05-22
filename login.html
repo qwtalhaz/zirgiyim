@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap - ZırGiyim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-page">
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <div class="auth-logo">
+                <a href="index.html" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem;justify-content:center">
+                    <svg style="width:36px;height:36px" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1a1a1a"/><path d="M8 12h10l-4 6h4l-6 10h14" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="30" cy="14" r="4" fill="#d4af37"/><path d="M28 20c0 0 2 2 2 4" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>
+                    <span style="font-size:1.6rem;font-weight:800;letter-spacing:2px;color:#1a1a1a">Zır<span style="color:#d4af37">Giyim</span></span>
+                </a>
+                <p>Hesabınıza giriş yapın</p>
+            </div>
+
+            <div id="auth-error" class="auth-message auth-error" style="display:none"></div>
+            <div id="auth-success" class="auth-message auth-success" style="display:none"></div>
+
+            <!-- GİRİŞ FORMU -->
+            <div id="login-form-section">
+                <form id="login-form" autocomplete="on">
+                    <div class="form-group">
+                        <label>E-posta Adresi</label>
+                        <input type="email" id="login-email" placeholder="ornek@mail.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Şifre</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="login-password" placeholder="Şifreniz" required autocomplete="current-password">
+                            <button type="button" class="toggle-password" data-target="login-password">👁</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block auth-btn">Giriş Yap</button>
+                </form>
+                <p class="auth-switch">Hesabınız yok mu? <a href="#" id="go-register">Kayıt Ol</a></p>
+                <p class="auth-switch"><a href="index.html">← Ana Sayfaya Dön</a></p>
+            </div>
+
+            <!-- KAYIT FORMU -->
+            <div id="register-form-section" style="display:none">
+                <form id="register-form" autocomplete="on">
+                    <div class="form-group">
+                        <label>Ad Soyad</label>
+                        <input type="text" id="reg-name" placeholder="Adınız ve soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-posta Adresi</label>
+                        <input type="email" id="reg-email" placeholder="ornek@mail.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Şifre</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="reg-password" placeholder="En az 6 karakter" required autocomplete="new-password" minlength="6">
+                            <button type="button" class="toggle-password" data-target="reg-password">👁</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Şifre Tekrar</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="reg-password2" placeholder="Şifreyi tekrar girin" required autocomplete="new-password">
+                            <button type="button" class="toggle-password" data-target="reg-password2">👁</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block auth-btn">Kayıt Ol</button>
+                </form>
+                <p class="auth-switch">Zaten hesabınız var mı? <a href="#" id="go-login">Giriş Yap</a></p>
+                <p class="auth-switch"><a href="index.html">← Ana Sayfaya Dön</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        // Zaten giriş yapılmışsa yönlendir
+        if (Auth.isLoggedIn()) {
+            var redir = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+            window.location.href = redir;
+        }
+
+        // URL'de #register varsa kayıt formunu aç
+        if (window.location.hash === '#register') {
+            document.getElementById('login-form-section').style.display = 'none';
+            document.getElementById('register-form-section').style.display = 'block';
+            if (document.querySelector('.auth-logo p'))
+                document.querySelector('.auth-logo p').textContent = 'Yeni hesap oluşturun';
+        }
+
+        // Sekme geçişleri
+        document.getElementById('go-register').addEventListener('click', e => {
+            e.preventDefault();
+            document.getElementById('login-form-section').style.display = 'none';
+            document.getElementById('register-form-section').style.display = 'block';
+            document.querySelector('.auth-logo p').textContent = 'Yeni hesap oluşturun';
+            hideMessages();
+        });
+        document.getElementById('go-login').addEventListener('click', e => {
+            e.preventDefault();
+            document.getElementById('register-form-section').style.display = 'none';
+            document.getElementById('login-form-section').style.display = 'block';
+            document.querySelector('.auth-logo p').textContent = 'Hesabınıza giriş yapın';
+            hideMessages();
+        });
+
+        // Şifre göster/gizle
+        document.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const input = document.getElementById(this.dataset.target);
+                input.type = input.type === 'password' ? 'text' : 'password';
+                this.textContent = input.type === 'password' ? '👁' : '🙈';
+            });
+        });
+
+        function showError(msg) {
+            const el = document.getElementById('auth-error');
+            el.textContent = msg; el.style.display = 'block';
+            document.getElementById('auth-success').style.display = 'none';
+        }
+        function showSuccess(msg) {
+            const el = document.getElementById('auth-success');
+            el.textContent = msg; el.style.display = 'block';
+            document.getElementById('auth-error').style.display = 'none';
+        }
+        function hideMessages() {
+            document.getElementById('auth-error').style.display = 'none';
+            document.getElementById('auth-success').style.display = 'none';
+        }
+
+        // Giriş
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const result = Auth.login(email, password);
+            if (result.success) {
+                showSuccess('Giriş başarılı! Yönlendiriliyorsunuz…');
+                setTimeout(() => {
+                    const redirect = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+                    window.location.href = redirect;
+                }, 800);
+            } else {
+                showError(result.message);
+            }
+        });
+
+        // Kayıt
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const pass = document.getElementById('reg-password').value;
+            const pass2 = document.getElementById('reg-password2').value;
+            if (pass !== pass2) { showError('Şifreler eşleşmiyor.'); return; }
+            if (pass.length < 6) { showError('Şifre en az 6 karakter olmalıdır.'); return; }
+            const result = Auth.register(name, email, pass);
+            if (result.success) {
+                showSuccess('Hesabınız oluşturuldu! Giriş yapılıyor…');
+                Auth.login(email, pass);
+                setTimeout(() => {
+                    var redir = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+                    window.location.href = redir;
+                }, 800);
+            } else {
+                showError(result.message);
+            }
+        });
+    </script>
+</body>
+</html>

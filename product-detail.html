@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ürün Detayı - ZırGiyim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo"><a href="index.html"><svg class="logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1a1a1a"/><path d="M8 12h10l-4 6h4l-6 10h14" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="30" cy="14" r="4" fill="#d4af37"/><path d="M28 20c0 0 2 2 2 4" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span class="logo-text">Zır<span>Giyim</span></span></a></div>
+                <ul class="nav-menu" id="main-nav">
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="products.html">Ürünler</a></li>
+                    <li><a href="cart.html">Sepet <span id="cart-count" class="cart-badge">0</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="product-detail">
+        <div class="container">
+            <a href="products.html" class="back-link">← Ürünlere Dön</a>
+            <div id="product-detail-content" class="product-detail-content">
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ZırGiyim. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script src="js/product-detail.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

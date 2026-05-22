@@ -1,0 +1,48 @@
+﻿# ========================================
+# ADIM 3: GMAIL UYGULAMA ŞİFRESİ OLUŞTURMA
+# ========================================
+
+## Neden Gerekli?
+Gmail, güvenlik için normal şifrenizi uygulamalarda kullanmanıza izin vermez.
+Özel bir 'Uygulama Şifresi' oluşturmanız gerekiyor.
+
+## 1. 2 Adımlı Doğrulamayı Aktifleştirin
+
+1. Tarayıcıda açın: https://myaccount.google.com/security
+
+2. '2 Adımlı Doğrulama' bölümüne tıklayın
+
+3. Telefonunuzu ekleyin ve aktifleştirin
+
+4. Onay kodunu girin
+
+## 2. Uygulama Şifresi Oluşturun
+
+1. Güvenlik sayfasında 'Uygulama şifreleri' araması yapın
+
+2. 'Uygulama şifreleri'ne tıklayın
+
+3. 'Uygulama seçin' dropdown'dan 'Diğer (özel ad)' seçin
+
+4. Adını yazın: 'MODA E-Ticaret'
+
+5. 'Oluştur' butonuna tıklayın
+
+6. Ekranda 16 haneli şifre görünecek:
+   Örnek: xxxx xxxx xxxx xxxx
+
+7. Bu şifreyi KOPYALAYIN ve KAYDEDIN
+   ⚠️ Bir daha göremezsiniz!
+
+8. Notepad'e yapıştırın:
+   Gmail Uygulama Şifresi: xxxxxxxxxxxxxxxx
+
+## NOTLAR:
+- Boşlukları kaldırın: xxxxxxxxxxxxxxxx
+- Bu şifre sadece uygulamalar için
+- Normal Gmail şifreniz değil
+- Her uygulama için yeni şifre oluşturabilirsiniz
+
+==========================================
+Uygulama şifresini aldıktan sonra devam et!
+==========================================

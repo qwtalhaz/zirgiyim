@@ -1,0 +1,215 @@
+﻿╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║     🛍️  MODA E-TİCARET SİSTEMİ KURULUM REHBERİ  🛍️        ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+📋 GENEL BAKIŞ
+==============
+Bu rehber ile gerçek ödeme sistemi olan e-ticaret sitenizi 
+kurabileceksiniz. Adımları sırayla takip edin.
+
+Tahmini Süre: 30-45 dakika
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADIM 1: NODE.JS KURULUMU                                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+1. Tarayıcıda açın: https://nodejs.org/en
+
+2. Yeşil 'LTS' butonuna tıklayın ve indirin
+
+3. İndirilen dosyayı çalıştırın (node-vXX.XX.X-x64.msi)
+
+4. Kurulum sihirbazını takip edin (hep Next)
+
+5. Kurulum bittikten sonra PowerShell'i KAPATIN ve YENİDEN AÇIN
+
+6. Test edin:
+   node --version
+   npm --version
+   
+   ✅ İkisi de versiyon numarası göstermeli
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADIM 2: İYZİCO HESABI OLUŞTURMA                             ║
+╚══════════════════════════════════════════════════════════════╝
+
+Detaylı talimatlar için: ADIM-2-IYZICO.txt dosyasını açın
+
+Özet:
+1. https://sandbox-merchant.iyzipay.com/ → Kayıt Ol
+2. E-postanızı onaylayın
+3. Giriş yapın
+4. Ayarlar > API Anahtarları
+5. API Key ve Secret Key'i NOT ALIN
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADIM 3: GMAIL UYGULAMA ŞİFRESİ                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Detaylı talimatlar için: ADIM-3-GMAIL.txt dosyasını açın
+
+Özet:
+1. https://myaccount.google.com/security
+2. 2 Adımlı Doğrulama'yı aktifleştir
+3. Uygulama şifreleri oluştur
+4. 16 haneli şifreyi NOT AL
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADIM 4: BACKEND PAKETLERİNİ YÜKLEME                         ║
+╚══════════════════════════════════════════════════════════════╝
+
+PowerShell'de şu komutları çalıştırın:
+
+   cd backend
+   npm install
+
+⏱️  Bu 2-5 dakika sürebilir. Bekleyin...
+
+✅ Tamamlandığında 'node_modules' klasörü oluşacak
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADIM 5: .ENV DOSYASI OLUŞTURMA                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+1. backend klasöründe '.env' adında YENİ bir dosya oluşturun
+   (uzantısı olmasın, sadece .env)
+
+2. backend/env-sablon.txt dosyasını açın
+
+3. İçeriği KOPYALAYIN
+
+4. .env dosyasına YAPIŞTIRIN
+
+5. Şu değerleri DEĞİŞTİRİN:
+
+   IYZICO_API_KEY=buraya_iyzico_api_key_yapistirin
+   ↓
+   IYZICO_API_KEY=sandbox-xxxxxxx (ADIM 2'den)
+
+   IYZICO_SECRET_KEY=buraya_iyzico_secret_key_yapistirin
+   ↓
+   IYZICO_SECRET_KEY=sandbox-yyyyyyy (ADIM 2'den)
+
+   EMAIL_PASS=buraya_gmail_uygulama_sifresi_yapistirin
+   ↓
+   EMAIL_PASS=xxxxxxxxxxxxxxxx (ADIM 3'ten - 16 hane)
+
+6. Dosyayı KAYDET
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADIM 6: SUNUCUYU BAŞLATMA                                   ║
+╚══════════════════════════════════════════════════════════════╝
+
+PowerShell'de (backend klasöründeyken):
+
+   npm start
+
+✅ Başarılı olursa göreceksiniz:
+   🚀 Server 3000 portunda çalışıyor...
+   🔗 http://localhost:3000
+
+⚠️  Bu pencereyi AÇIK BIRAKIN! (Sunucu çalışması için)
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADIM 7: TEST ETME                                           ║
+╚══════════════════════════════════════════════════════════════╝
+
+1. YENİ bir tarayıcı sekmesi açın:
+   http://localhost:3000/api/health
+
+   ✅ Görmelisiniz: {\"status\":\"ok\",\"message\":\"Server çalışıyor\"}
+
+2. Ana dizindeki 'index.html' dosyasını tarayıcıda açın
+
+3. Birkaç ürün ekleyin
+
+4. Sepete gidin
+
+5. 'Ödemeye Geç' butonuna tıklayın
+
+6. Formu doldurun:
+
+   📧 E-posta: gerçek mail adresiniz
+   📱 Telefon: 05XXXXXXXXX
+
+   💳 TEST KART BİLGİLERİ:
+   Kart No: 5528 7900 0000 0001
+   Son Kullanma: 12/30
+   CVC: 123
+   Kart Sahibi: Test User
+
+7. 'Ödemeyi Tamamla' butonuna tıklayın
+
+8. Bekleyin... (5-10 saniye)
+
+✅ BAŞARILI!
+   - Yeşil onay ekranı gelecek
+   - Size e-posta gelecek (kontrol edin)
+   - talhazoroglu00@gmail.com'a sipariş bildirimi gelecek
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ SORUN GİDERME                                                ║
+╚══════════════════════════════════════════════════════════════╝
+
+❌ 'node' komutu bulunamadı
+✅ Node.js'i yeniden kurun, PowerShell'i yeniden başlatın
+
+❌ npm install hatası
+✅ PowerShell'i yönetici olarak çalıştırın
+
+❌ Sunucu başlamıyor
+✅ .env dosyasını kontrol edin
+✅ Port 3000 kullanımda olabilir
+
+❌ Ödeme başarısız
+✅ Backend çalışıyor mu? (http://localhost:3000/api/health)
+✅ .env dosyasındaki API anahtarları doğru mu?
+✅ İyzico sandbox hesabı aktif mi?
+
+❌ E-posta gelmiyor
+✅ Gmail uygulama şifresi doğru mu?
+✅ Spam klasörünü kontrol edin
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ADMIN PANELİ                                                 ║
+╚══════════════════════════════════════════════════════════════╝
+
+Siparişleri görmek için:
+
+1. Tarayıcıda: admin/login.html
+
+2. Giriş bilgileri:
+   Kullanıcı: admin
+   Şifre: admin123
+
+3. Siparişleri görüntüleyin
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ ÖNEMLİ GÜVENLİK NOTLARI                                     ║
+╚══════════════════════════════════════════════════════════════╝
+
+⚠️  .env dosyasını ASLA paylaşmayın!
+⚠️  .env dosyasını GitHub'a YÜKLEMEYIN!
+⚠️  Sandbox sadece TEST içindir
+⚠️  Canlıya geçmek için İyzico'da gerçek hesap gerekir
+
+
+╔══════════════════════════════════════════════════════════════╗
+║ TEBRIKLER! SİSTEM HAZIR! 🎉                                 ║
+╚══════════════════════════════════════════════════════════════╝
+
+Artık gerçek ödeme alabilen bir e-ticaret siteniz var!
+
+İyi satışlar! 🚀

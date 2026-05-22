@@ -1,0 +1,45 @@
+﻿# ========================================
+# ADIM 2: İYZİCO HESABI OLUŞTURMA
+# ========================================
+
+## 1. Test Hesabı Oluşturma (SANDBOX)
+
+1. Tarayıcınızda açın: https://sandbox-merchant.iyzipay.com/
+
+2. 'Kayıt Ol' butonuna tıklayın
+
+3. Formu doldurun:
+   - İşletme Adı: MODA Giyim
+   - E-posta: talhazoroglu00@gmail.com (veya farklı)
+   - Şifre: Güçlü bir şifre seçin
+   - Telefon: 05XX XXX XX XX
+
+4. Onay e-postasını kontrol edin ve hesabı aktifleştirin
+
+5. Giriş yapın
+
+## 2. API Anahtarlarını Alma
+
+1. Sol menüden 'Ayarlar' > 'API Anahtarları' bölümüne gidin
+
+2. Göreceksiniz:
+   📋 API Key: sandbox-XXXXXXXXXX...
+   📋 Secret Key: sandbox-YYYYYYYY...
+
+3. İkisini de bir yere NOT ALIN (Notepad'e kopyalayın)
+
+## 3. Test Kartları
+
+İyzico size otomatik test kartları sağlar:
+✅ Başarılı: 5528790000000001
+❌ Başarısız: 5406670000000009
+
+## ÖNEMLİ NOTLAR:
+- Bu SANDBOX (test) ortamıdır
+- Gerçek para hareket ETMEZ
+- Sadece test için kullanılır
+- Canlıya geçmek için gerçek hesap gerekir
+
+==========================================
+API Anahtarlarını aldıktan sonra devam et!
+==========================================

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siparişlerim - ZırGiyim</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <script>
+        // Auth kontrolü
+    </script>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo"><a href="index.html"><svg class="logo-svg" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" rx="8" fill="#1a1a1a"/><path d="M8 12h10l-4 6h4l-6 10h14" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="30" cy="14" r="4" fill="#d4af37"/><path d="M28 20c0 0 2 2 2 4" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span class="logo-text">Zır<span>Giyim</span></span></a></div>
+                <ul class="nav-menu" id="main-nav"></ul>
+            </div>
+        </nav>
+    </header>
+
+    <section class="my-orders-section">
+        <div class="container">
+            <h2 class="page-title">Siparişlerim</h2>
+            <div id="orders-container"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 ZırGiyim. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/navbar.js"></script>
+    <script>
+        if (!Auth.isLoggedIn()) {
+            window.location.href = 'login.html?redirect=siparislerim.html';
+        }
+
+        const currentUser = Auth.getCurrentUser();
+
+        function getStatusSteps(status) {
+            const steps = [
+                { key: 'Ödeme Alındı', icon: '💳', label: 'Ödeme Alındı' },
+                { key: 'Hazırlanıyor', icon: '📦', label: 'Hazırlanıyor' },
+                { key: 'Kargoya Verildi', icon: '🚚', label: 'Kargoda' },
+                { key: 'Teslim Edildi', icon: '✅', label: 'Teslim Edildi' }
+            ];
+
+            if (status === 'İptal Edildi') {
+                return steps.map(s => ({ ...s, state: 'cancelled' })).slice(0, 1).concat(
+                    [{ key: 'İptal Edildi', icon: '❌', label: 'İptal Edildi', state: 'cancelled' }]
+                );
+            }
+
+            const currentIdx = steps.findIndex(s => s.key === status);
+            return steps.map((s, i) => ({
+                ...s,
+                state: i < currentIdx ? 'done' : i === currentIdx ? 'current' : ''
+            }));
+        }
+
+        function renderOrders() {
+            const allOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const myOrders = allOrders.filter(o => o.customerEmail === currentUser.email);
+            const container = document.getElementById('orders-container');
+
+            if (myOrders.length === 0) {
+                container.innerHTML = `
+                    <div class="orders-empty">
+                        <div class="empty-icon">📭</div>
+                        <p style="font-size:1.1rem;color:#666">Henüz siparişiniz bulunmuyor.</p>
+                        <a href="products.html" class="btn btn-primary" style="margin-top:20px">Alışverişe Başla</a>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = myOrders.map(order => {
+                const steps = getStatusSteps(order.status || 'Ödeme Alındı');
+                const stepsHtml = steps.map(s => `
+                    <div class="track-step ${s.state}">
+                        <div class="track-dot">${s.icon}</div>
+                        <span class="track-label">${s.label}</span>
+                    </div>`).join('');
+
+                const itemsHtml = (order.items || []).map(item =>
+                    `<span class="order-item-chip">${item.name} (${item.size}) x${item.quantity}</span>`
+                ).join('');
+
+                // Durum güncellemesi var mı kontrol et
+                const statusUpdates = JSON.parse(localStorage.getItem('statusUpdates') || '{}');
+                const updateKey = 'order_' + order.id;
+                let updateBanner = '';
+                if (statusUpdates[updateKey]) {
+                    updateBanner = `<div class="status-update-banner">🔔 Sipariş durumunuz güncellendi: <strong>${order.status}</strong></div>`;
+                    // Okundu olarak işaretle
+                    delete statusUpdates[updateKey];
+                    localStorage.setItem('statusUpdates', JSON.stringify(statusUpdates));
+                }
+
+                return `
+                    <div class="order-card">
+                        <div class="order-card-header">
+                            <span class="order-card-id">Sipariş #${order.id}</span>
+                            <span class="order-card-date">${order.date || ''} ${order.time || ''}</span>
+                            <span class="order-card-total">₺${order.total}</span>
+                        </div>
+                        <div class="order-card-body">
+                            ${updateBanner}
+                            <div class="order-status-track">${stepsHtml}</div>
+                            <div class="order-items-preview">${itemsHtml}</div>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        renderOrders();
+    </script>
+</body>
+</html>
